@@ -76,7 +76,7 @@
                 let names = [];
 
                 for (let i = 0; i < singleNameContainersArray.length; i++) {
-                    names.push(singleNameContainersArray[i].getElementsByTagName('p').value);
+                    names.push(singleNameContainersArray[i].getElementsByTagName('p')[0].textContent);
                 }
 
                 return names;
