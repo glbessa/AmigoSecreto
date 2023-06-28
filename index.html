@@ -60,7 +60,7 @@
 
             function generateLink(name) {
                 const b64Name = btoa(name);
-                return `${window.location.protocol}://${window.location.hostname}/verify/index.html?${b64Name}`;
+                return `${window.location.protocol}//${window.location.hostname}/verify/index.html?${b64Name}`;
             }
 
             function disableAllCopyBtns() {
