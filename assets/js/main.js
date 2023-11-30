@@ -1,8 +1,3 @@
-const newNameTxtInp = document.getElementById("newNameTxtInp");
-const addNewNameBtn = document.getElementById("addNewNameBtn");
-const namesContainer = document.getElementById("namesContainer");
-const sortSecretFriendsBtn = document.getElementById("sortSecretFriendsBtn");
-
 function createNameContainer(name) {
     const singleNameContainer = document.createElement('div');
     singleNameContainer.setAttribute('class', 'singleNameContainer');
@@ -31,7 +26,7 @@ function createNameContainer(name) {
     return singleNameContainer;
 }
 
-function addNewNameToContainer() {
+function addNewNameToContainer(namesContainer, newNameTxtInp) {
     const newName = newNameTxtInp.value;
     newNameTxtInp.value = '';
 
@@ -90,16 +85,23 @@ function sortSecretFriends() {
     }
 }
 
-sortSecretFriendsBtn.addEventListener('click', (event) => {
-    sortSecretFriends();
-});
-addNewNameBtn.addEventListener('click', (event) => {
-    disableAllCopyBtns();
-    addNewNameToContainer();
-});
-newNameTxtInp.addEventListener('keypress', (event) => {
-    if (event.key == 'Enter') {
-        event.preventDefault();
-        addNewNameBtn.click();
-    }
+document.addEventListener('DOMContentLoaded', (event) => {
+    const newNameTxtInp = document.getElementById("newNameTxtInp");
+    const addNewNameBtn = document.getElementById("addNewNameBtn");
+    const namesContainer = document.getElementById("namesContainer");
+    const sortSecretFriendsBtn = document.getElementById("sortSecretFriendsBtn");
+
+    sortSecretFriendsBtn.addEventListener('click', (event) => {
+        sortSecretFriends();
+    });
+    addNewNameBtn.addEventListener('click', (event) => {
+        disableAllCopyBtns();
+        addNewNameToContainer(namesContainer, newNameTxtInp);
+    });
+    newNameTxtInp.addEventListener('keypress', (event) => {
+        if (event.key == 'Enter') {
+            event.preventDefault();
+            addNewNameBtn.click();
+        }
+    });
 });
