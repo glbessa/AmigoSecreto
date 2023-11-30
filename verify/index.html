@@ -7,8 +7,10 @@
         <title>Amigo secreto</title>
     </head>
     <body>
-        <p>Seu amigo secreto é:</p>
-        <p id="friendName"></p>
+        <div id="friendContainer">
+            <p>Seu amigo secreto é:</p>
+            <p id="friendName"></p>
+        </div>
         <script>
             const seuAmigoSecreto = atob(window.location.search.split('?')[1]);
             const friendNameText = window.document.getElementById("friendName");
