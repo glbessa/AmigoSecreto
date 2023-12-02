@@ -113,7 +113,7 @@ function sortSecretFriends() {
         return;
     }
 
-    for (let i = 0; i < singleNameContainersArray.length - 1; i++) {
+    for (let i = 0; i < singleNameContainersArray.length; i++) {
         let actualName = singleNameContainersArray[i].getElementsByTagName('p')[0].textContent;
 
         while (true) {
@@ -124,6 +124,10 @@ function sortSecretFriends() {
             }
             else if (names[randX] != actualName && is_even == true) {
                 break;
+            }
+            else if (names.length == 1) {
+                i = 0;
+                names = getNames();
             }
         }
     
