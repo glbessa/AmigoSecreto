@@ -1,0 +1,78 @@
+body {
+    margin: 0;
+    padding: 0 10%;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    /* cor de fundo em gradiente amarelo */
+    /*background: linear-gradient(90deg, #527853 30%, #527853 60%);*/
+    background-color: #F9E8D9;
+    display: flex;
+    align-items: center;
+}
+
+main {
+    /* desfocar somente o fundo */
+    backdrop-filter: blur(10px);
+    background-color: #527853;
+    border-radius: 30px 0;
+    padding: 20px;
+    color: #f5f5f5;
+    text-align: center;
+    margin: 10px auto;
+    max-width: 90%;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#sortSecretFriendsBtn {
+    background-color: #EE7214;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.singleNameContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 10px 0;
+    background-color: #F9E8D9;
+    color: black;
+}
+
+.singleNameContainer p {
+    width: 80%;
+    overflow: scroll;
+    text-wrap: nowrap;
+}
+
+.singleNameContainer input {
+    width: 10%;
+}
+
+.singleNameContainer button {
+    background-color: #EE7214;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.singleNameContainer img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}

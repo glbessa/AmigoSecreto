@@ -1,5 +1,5 @@
 function createNameContainer(name) {
-    const singleNameContainer = document.createElement('div');
+    let singleNameContainer = document.createElement('div');
     singleNameContainer.setAttribute('class', 'singleNameContainer');
 
     const nameTxt = document.createElement('p');
@@ -26,11 +26,37 @@ function createNameContainer(name) {
     return singleNameContainer;
 }
 
-function addNewNameToContainer(namesContainer, newNameTxtInp) {
+function addNewNameToContainer() {
     const newName = newNameTxtInp.value;
+    if (newName == '') {
+        alert('Digite um nome para adicionar');
+        return;
+    }
+
     newNameTxtInp.value = '';
 
-    let singleNameContainer = createNameContainer(newName);
+    let singleNameContainer = document.createElement('div');
+    singleNameContainer.setAttribute('class', 'singleNameContainer');
+
+    const nameTxt = document.createElement('p');
+    nameTxt.textContent = newName;
+
+    const copySecretBtn = document.createElement('img');
+    copySecretBtn.src = 'assets/icons/copy_disabled.svg';
+    copySecretBtn.setAttribute('class', 'copySecretBtn');
+    copySecretBtn.disabled = true;
+
+    const removeBtn = document.createElement('img');
+    removeBtn.src = 'assets/icons/circular_x.svg';
+    
+    removeBtn.addEventListener('click', (event) => {
+        disableAllCopyBtns();
+        singleNameContainer.remove();
+    });
+    
+    singleNameContainer.appendChild(nameTxt);
+    singleNameContainer.appendChild(copySecretBtn);
+    singleNameContainer.appendChild(removeBtn);
     
     namesContainer.appendChild(singleNameContainer);
 }
@@ -41,7 +67,7 @@ function getRandomInt(max) {
 
 function generateLink(name) {
     const b64Name = btoa(name);
-    return `${window.location.protocol}${window.location.hostname}/AmigoSecreto/verify/index.html?${b64Name}`;
+    return `${window.location.protocol}//${window.location.hostname}/amigo_secreto/verify/?${b64Name}`;
 }
 
 function disableAllCopyBtns() {
@@ -49,6 +75,7 @@ function disableAllCopyBtns() {
 
     for (let i = 0; i < copySecretsBtnsArray.length; i++) {
         copySecretsBtnsArray[i].disabled = true;
+        copySecretsBtnsArray[i].src = 'assets/icons/copy_disabled.svg';
     }
 }
 
@@ -63,26 +90,60 @@ function getNames() {
     return names;
 }
 
+function getNamesMap() {
+    const singleNameContainersArray = document.getElementsByClassName('singleNameContainer');
+    let names = new Map();
+
+    for (let i = 0; i < singleNameContainersArray.length; i++) {
+        names.set(singleNameContainersArray[i].getElementsByTagName('p')[0].textContent, "");
+    }
+
+    return names;
+}
+
 function sortSecretFriends() {
     const singleNameContainersArray = document.getElementsByClassName('singleNameContainer');
+    let namesRelation = getNamesMap();
     let names = getNames();
-
     let randX;
-    for (let i = 0; i < singleNameContainersArray.length; i++) {
-        do {
-            randX = getRandomInt(names.length);
-        } while (names[randX] == singleNameContainersArray[i].getElementsByTagName('p').value);
+    let is_even = names.length % 2 == 0;
 
-        const name = names[randX];
+    if (singleNameContainersArray.length < 2) {
+        alert('Adicione pelo menos 2 nomes para sortear os amigos secretos');
+        return;
+    }
+
+    for (let i = 0; i < singleNameContainersArray.length - 1; i++) {
+        let actualName = singleNameContainersArray[i].getElementsByTagName('p')[0].textContent;
+
+        while (true) {
+            randX = getRandomInt(names.length);
+
+            if (names[randX] != actualName && is_even == false && namesRelation.get(names[randX]) != actualName && namesRelation.get(actualName) != names[randX]) {
+                break;
+            }
+            else if (names[randX] != actualName && is_even == true) {
+                break;
+            }
+        }
+    
+        console.log(`${names[randX]} -> ${actualName}`);
+
+        const nameChoosen = names[randX];
+        namesRelation.set(actualName, nameChoosen);
         names.splice(randX, 1);
 
-        const link = generateLink(name);
+        const link = generateLink(nameChoosen);
         const copySecretBtn = singleNameContainersArray[i].getElementsByClassName('copySecretBtn')[0];
         copySecretBtn.disabled = false;
+        copySecretBtn.src = 'assets/icons/copy.svg';
+
         copySecretBtn.addEventListener('click', (event) => {
             navigator.clipboard.writeText(link);
         });
     }
+
+    console.log(namesRelation.size);
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
