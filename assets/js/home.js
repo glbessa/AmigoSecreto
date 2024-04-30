@@ -67,7 +67,7 @@ function getRandomInt(max) {
 
 function generateLink(name) {
     const b64Name = btoa(name);
-    return `${window.location.protocol}//${window.location.hostname}/amigo_secreto/verify/?${b64Name}`;
+    return `${window.location.protocol}//${window.location.hostname}/AmigoSecreto/verify/?${b64Name}`;
 }
 
 function disableAllCopyBtns() {
